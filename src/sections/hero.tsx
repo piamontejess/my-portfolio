@@ -136,7 +136,7 @@ export default function Hero() {
         {/* Short intro */}
         <div className="opacity-0 animate-fade-in-up animation-delay-500">
           <p className="mx-auto max-w-2xl text-base sm:text-lg leading-relaxed text-muted-foreground mb-12">
-            I craft beautiful, functional, and user-friendly digital experiences
+            I craft functional, and user-friendly digital experiences
             that make a meaningful difference.
           </p>
         </div>
