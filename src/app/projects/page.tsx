@@ -28,7 +28,7 @@ export default function AllProjectsPage() {
             href="/#projects"
             className="inline-flex w-fit items-center justify-center rounded-full border border-border bg-card/70 px-4 py-2 text-xs sm:text-sm font-medium text-foreground shadow-sm transition-all hover:bg-muted"
           >
-            ← Back to featured section
+            ← Back 
           </Link>
         </div>
 
