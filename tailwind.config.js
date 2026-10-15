@@ -2,6 +2,7 @@
 module.exports = {
   darkMode: ["class"],
   content: [
+    "./components/**/*.{js,ts,jsx,tsx}",
     "./src/app/**/*.{js,ts,jsx,tsx}",
     "./src/components/**/*.{js,ts,jsx,tsx}",
     "./src/sections/**/*.{js,ts,jsx,tsx}",
@@ -60,5 +61,5 @@ module.exports = {
   		}
   	}
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate")], // eslint-disable-line @typescript-eslint/no-require-imports -- Tailwind loads this existing config as CommonJS.
 };

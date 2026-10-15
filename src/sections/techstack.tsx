@@ -1,92 +1,65 @@
 "use client";
 
-const technologies = [
-  { name: "Bootstrap 4", icon: "icons8-bootstrap-48.png" },
-  { name: "Git", icon: "icons8-git-48.png" },
-  { name: "Figma", icon: "icons8-figma-48.png" },
-  { name: "HTML 5", icon: "icons8-html5-48.png" },
-  { name: "JavaScript", icon: "icons8-javascript-48.png" },
-  { name: "Laravel", icon: "icons8-laravel-64.png" },
-  { name: "PHP", icon: "icons8-php-64.png" },
-  { name: "PostgreSQL", icon: "icons8-postgresql-48.png" },
-  { name: "Postman", icon: "postman-icon-svgrepo-com.svg" },
-  { name: "ReactJS", icon: "atom.png" },
-  { name: "Tailwind CSS", icon: "icons8-tailwind-css-48.png" },
-  { name: "TypeScript", icon: "icons8-typescript-48.png" },
-  { name: "Python", icon: "icons8-python-48.png" },
-  { name: "Notion", icon: "icons8-notion-50.png" },
-  { name: "shadcn/ui", icon: "shadcn-ui-logo-png_seeklogo-519786.png" },
-  { name: "VS Code", icon: "icons8-visual-studio-30.png" },
-  { name: "npm", icon: "icons8-npm-48.png" },
-  { name: "Node.js", icon: "icons8-node-js-48.png" },
-  { name: "Vite", icon: "icons8-vite-48.png" },
-  { name: "Expo", icon: "icons8-expo-50.png" },
-  { name: "Miro", icon: "icons8-miro-64.png" },
-  { name: "GitHub", icon: "icons8-github-logo-50.png" },
-];
+import { type CSSProperties } from "react";
+import Image from "next/image";
+import { technologyRows, type Technology } from "../lib/technologies-data";
 
-export default function TechStack() {
-  const firstRow = [...technologies, ...technologies];
-  const secondRow = [...technologies].reverse();
+function TechnologyItem({ technology }: { technology: Technology }) {
+  const Symbol = technology.symbol;
 
   return (
-    <section id="techstack" className="py-20 px-6 bg-background/80 relative overflow-hidden">
-      <div className="mx-auto max-w-6xl relative z-10">
-        {/* Section header */}
-        <div className="text-center mb-10">
-          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-3">
-            Tech Stack
-          </h2>
-          <p className="text-sm sm:text-base text-muted-foreground max-w-xl mx-auto">
-            Tools and technologies I enjoy using to design, build, and ship digital experiences.
-          </p>
+    <li className="technology-item">
+      <span className={`technology-icon ${technology.image ? "technology-logo" : ""}`}>
+        {technology.image ? (
+          <Image src={`/assets/tech/${technology.image}`} alt="" width={32} height={32} />
+        ) : Symbol ? <Symbol size={26} strokeWidth={1.6} aria-hidden="true" /> : null}
+      </span>
+      <span>{technology.name}</span>
+    </li>
+  );
+}
+
+export default function TechStack() {
+
+  return (
+    <section id="skills" className="section-shell section-spacing skills-section" aria-labelledby="skills-title">
+      <span id="techstack" className="section-anchor" aria-hidden="true" />
+      <div className="section-heading heading-with-copy">
+        <div>
+
+          <h2 id="skills-title">The tools behind <span className="editorial">the work.</span></h2>
         </div>
-
-        {/* Carousel wrapper */}
-        <div className="relative overflow-hidden py-6 space-y-6">
-          {/* Gradient fades on edges */}
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-background to-transparent" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-background to-transparent" />
-
-          {/* Top row - normal direction */}
-          <div className="flex gap-10 whitespace-nowrap tech-marquee">
-            {firstRow.map((tech, index) => (
-              <div
-                key={tech.name + "-top-" + index}
-                className="inline-flex items-center justify-center"
-                title={tech.name}
-              >
-                <div className="flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-full bg-card shadow-md border border-border/60 hover:shadow-lg hover:-translate-y-1 transition-transform duration-300">
-                  <img
-                    src={`/assets/tech/${tech.icon}`}
-                    alt={tech.name}
-                    className="h-8 w-8 sm:h-10 sm:w-10 object-contain"
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Bottom row - reverse direction */}
-          <div className="flex gap-10 whitespace-nowrap tech-marquee-reverse">
-            {[...secondRow, ...secondRow].map((tech, index) => (
-              <div
-                key={tech.name + "-bottom-" + index}
-                className="inline-flex items-center justify-center"
-                title={tech.name}
-              >
-                <div className="flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-full bg-card shadow-md border border-border/60 hover:shadow-lg hover:-translate-y-1 transition-transform duration-300">
-                  <img
-                    src={`/assets/tech/${tech.icon}`}
-                    alt={tech.name}
-                    className="h-8 w-8 sm:h-10 sm:w-10 object-contain"
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        <p>Technologies I’ve used across web, mobile, backend integration, and everyday development.</p>
       </div>
+
+      <div className="marquee-toolbar">
+        <p>Web & mobile <span aria-hidden="true">/</span> Backend & data <span aria-hidden="true">/</span> Delivery & tools</p>
+      </div>
+
+      <div id="technology-marquees" className="marquee-viewport" tabIndex={0} role="region" aria-label="Technology stack" aria-describedby="marquee-help">
+        {technologyRows.map((row, index) => (
+          <div className="marquee-row" key={row.label}>
+            {/* Adapted from 5da433d: equal duplicated groups make -50% an exact loop. */}
+            <div
+              className={`tech-marquee ${index === 1 ? "tech-marquee-reverse" : ""}`}
+              style={{ "--marquee-duration": `${row.items.length * 4.5}s` } as CSSProperties}
+            >
+              {[false, true].map(duplicate => (
+                <ul
+                  key={String(duplicate)}
+                  className="marquee-group"
+                  aria-label={duplicate ? undefined : row.label}
+                  aria-hidden={duplicate || undefined}
+                  role="list"
+                >
+                  {row.items.map(technology => <TechnologyItem key={technology.name} technology={technology} />)}
+                </ul>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+      <p id="marquee-help" className="marquee-footnote">Hover or use keyboard focus to pause.</p>
     </section>
   );
 }
